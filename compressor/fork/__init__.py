@@ -7,7 +7,8 @@ import subprocess
 import struct
 import sys
 
-from .. import BaseProcessor, format_http1, strip_conn_headers
+#from .. import BaseProcessor, format_http1, strip_conn_headers
+from .. import BaseProcessor, format_http1
 
 class Processor(BaseProcessor):
   def __init__(self, options, is_request, params):
@@ -24,7 +25,8 @@ class Processor(BaseProcessor):
                                      stdin=subprocess.PIPE)
 
   def compress(self, in_headers, host):
-    http1_msg = format_http1(strip_conn_headers(in_headers))
+    #http1_msg = format_http1(strip_conn_headers(in_headers))
+    http1_msg = format_http1(in_headers)
     self.process.stdin.write(http1_msg)
     if self.delimit_binary:
       output = self.process.stdout.read(8)
